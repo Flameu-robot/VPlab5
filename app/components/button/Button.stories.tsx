@@ -1,71 +1,126 @@
-import React from 'react';
-import { Meta, StoryFn } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import Button from './Button';
-import { ButtonProps } from './Button';
 
-export default {
+const meta: Meta<typeof Button> = {
   title: 'Components/Button',
   component: Button,
   parameters: {
     layout: 'centered',
+    docs: {
+      description: {
+        component: 'Универсальный компонент кнопки с поддержкой различных стилей, размеров и состояний.',
+      },
+    },
   },
+  tags: ['autodocs'],
   argTypes: {
     variant: {
       control: { type: 'select' },
       options: ['primary', 'secondary', 'danger'],
+      description: 'Стиль кнопки',
     },
     size: {
       control: { type: 'select' },
       options: ['sm', 'md', 'lg'],
+      description: 'Размер кнопки',
     },
     disabled: {
-      control: 'boolean',
+      control: { type: 'boolean' },
+      description: 'Отключена ли кнопка',
     },
-    onClick: { action: 'clicked' },
+    onClick: {
+      action: 'clicked',
+      description: 'Обработчик клика',
+    },
+    type: {
+      control: { type: 'select' },
+      options: ['button', 'submit', 'reset'],
+      description: 'Тип кнопки',
+    },
   },
-} as Meta<typeof Button>;
+} satisfies Meta<typeof Button>;
 
-const Template: StoryFn<ButtonProps> = (args) => <Button {...args} />;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const Primary = Template.bind({});
-Primary.args = {
-  variant: 'primary',
-  size: 'md',
-  children: 'Primary Button',
+export const Primary: Story = {
+  args: {
+    variant: 'primary',
+    size: 'md',
+    children: 'Primary Button',
+    disabled: false,
+  },
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
-  variant: 'secondary',
-  size: 'md',
-  children: 'Secondary Button',
+export const Secondary: Story = {
+  args: {
+    variant: 'secondary',
+    size: 'md',
+    children: 'Secondary Button',
+  },
 };
 
-export const Danger = Template.bind({});
-Danger.args = {
-  variant: 'danger',
-  size: 'md',
-  children: 'Danger Button',
+export const Danger: Story = {
+  args: {
+    variant: 'danger',
+    size: 'md',
+    children: 'Danger Button',
+  },
 };
 
-export const Small = Template.bind({});
-Small.args = {
-  variant: 'primary',
-  size: 'sm',
-  children: 'Small Button',
+export const Small: Story = {
+  args: {
+    variant: 'primary',
+    size: 'sm',
+    children: 'Small Button',
+  },
 };
 
-export const Large = Template.bind({});
-Large.args = {
-  variant: 'primary',
-  size: 'lg',
-  children: 'Large Button',
+export const Large: Story = {
+  args: {
+    variant: 'primary',
+    size: 'lg',
+    children: 'Large Button',
+  },
 };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-  variant: 'primary',
-  size: 'md',
-  disabled: true,
-  children: 'Disabled Button',
+export const Disabled: Story = {
+  args: {
+    variant: 'primary',
+    size: 'md',
+    children: 'Disabled Button',
+    disabled: true,
+  },
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+      <Button variant="primary" size="sm" onClick={() => {}}>
+        Small
+      </Button>
+      <Button variant="primary" size="md" onClick={() => {}}>
+        Medium
+      </Button>
+      <Button variant="primary" size="lg" onClick={() => {}}>
+        Large
+      </Button>
+    </div>
+  ),
+};
+
+export const Variants: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+      <Button variant="primary" size="md" onClick={() => {}}>
+        Primary
+      </Button>
+      <Button variant="secondary" size="md" onClick={() => {}}>
+        Secondary
+      </Button>
+      <Button variant="danger" size="md" onClick={() => {}}>
+        Danger
+      </Button>
+    </div>
+  ),
 };
