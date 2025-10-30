@@ -11,14 +11,15 @@
   ],
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "jest",
-    "build:lib": "rollup -c --bundleConfigAsCjs",
-    "prepublishOnly": "npm run build:lib"
+    "build": "npm run build:js && npm run build:types",
+    "build:js": "rollup -c --bundleConfigAsCjs",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "next": "16.0.0",
@@ -35,6 +36,7 @@
     "@babel/preset-react": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
     "@chromatic-com/storybook": "^4.1.1",
+    "@rollup/plugin-babel": "^6.1.0",
     "@rollup/plugin-commonjs": "^28.0.9",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-terser": "^0.4.4",

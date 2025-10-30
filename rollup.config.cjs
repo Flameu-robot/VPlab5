@@ -1,15 +1,9 @@
-// rollup.config.js
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import typescript from '@rollup/plugin-typescript';
+import babel from '@rollup/plugin-babel';
 import terser from '@rollup/plugin-terser';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 export default {
     input: 'src/index.ts',
@@ -19,24 +13,17 @@ export default {
     ],
     plugins: [
         peerDepsExternal(),
-        resolve(),
+        resolve({ extensions: ['.js', '.ts', '.tsx'] }),
         commonjs(),
-        typescript({
-            tsconfig: false,
-            jsx: 'react-jsx',
-            rootDir: '.',
-            include: ['src/**/*', 'app/**/*'],
-            exclude: ['node_modules', 'dist', '.next', '**/*.test.tsx', '**/*.stories.tsx'],
-            compilerOptions: {
-                baseUrl: '.',
-                paths: { '@/*': ['*'] },
-                allowSyntheticDefaultImports: true,
-                esModuleInterop: true,
-                skipLibCheck: true,
-                noEmit: true,
-                module: 'ESNext',
-                target: 'ES2017',
-            },
+        babel({
+            babelHelpers: 'bundled',
+            presets: [
+                '@babel/preset-env',
+                '@babel/preset-react',
+                '@babel/preset-typescript'
+            ],
+            extensions: ['.js', '.ts', '.tsx'],
+            exclude: 'node_modules/**',
         }),
         postcss({
             modules: true,
