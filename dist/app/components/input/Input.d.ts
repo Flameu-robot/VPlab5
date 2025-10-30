@@ -1,4 +1,3 @@
-import React from 'react';
 export interface InputProps {
     label?: string;
     error?: string;
